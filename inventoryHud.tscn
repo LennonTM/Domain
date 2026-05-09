@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://ck2fn1t7rjdrr"]
+
+[node name="InventoryHud" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.959
+anchor_right = 0.5
+anchor_bottom = 0.959
+offset_left = -418.0
+offset_top = -80.0
+offset_right = 418.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="InventoryPanel"]
+custom_minimum_size = Vector2(800, 80)
+layout_mode = 2
+
+[node name="0" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="1" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="2" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="3" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="4" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="5" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="6" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="7" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="8" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="9" type="TextureRect" parent="InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2

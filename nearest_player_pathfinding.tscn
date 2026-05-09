@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxfm54808ojhi"]
+
+[ext_resource type="Script" path="res://NearestPlayerPathfinding.gd" id="1_xvn3u"]
+
+[node name="NearestPlayerPathfinding" type="Node3D"]
+script = ExtResource("1_xvn3u")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+avoidance_enabled = true
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]

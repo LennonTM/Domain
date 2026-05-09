@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca2bwwfwu3u6w"]
+
+[ext_resource type="Script" path="res://IdleSound.gd" id="1_rbxa5"]
+
+[node name="IdleSound" type="Node3D"]
+script = ExtResource("1_rbxa5")
+
+[node name="IdleAudio" type="AudioStreamPlayer3D" parent="."]

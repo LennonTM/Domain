@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6iqd1v40jau6"]
+
+[ext_resource type="Script" path="res://DamageArea.gd" id="1_th8vh"]
+
+[node name="DamageArea" type="Node3D"]
+script = ExtResource("1_th8vh")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.79769e+308
+one_shot = true
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+
+[node name="Timer2" type="Timer" parent="."]
+wait_time = 0.02
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

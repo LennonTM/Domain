@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://buasv5o8khbcs"]
+
+[ext_resource type="PackedScene" uid="uid://d0p1fd14wu0hs" path="res://stick.glb" id="1_lf578"]
+[ext_resource type="Script" path="res://stick.gd" id="2_n8u0w"]
+[ext_resource type="AudioStream" uid="uid://c3ute6ja5bys6" path="res://Smash.mp3" id="3_whnda"]
+[ext_resource type="Texture2D" uid="uid://druu886ohtoi4" path="res://stick.png" id="4_dcjyl"]
+
+[node name="stick" instance=ExtResource("1_lf578")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.105108, 0, 0)
+script = ExtResource("2_n8u0w")
+
+[node name="HitSound" type="AudioStreamPlayer3D" parent="." index="1"]
+transform = Transform3D(10, 0, 0, 0, 10, -7.07805e-07, 0, 7.07805e-07, 10, -1.05108, 3.05474e-06, 5.96046e-07)
+stream = ExtResource("3_whnda")
+volume_db = -10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+texture = ExtResource("4_dcjyl")

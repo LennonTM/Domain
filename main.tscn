@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://uwkjludp5ueo"]
+
+[ext_resource type="PackedScene" uid="uid://bwjmma2xndqo7" path="res://MainMenu.tscn" id="1_7mi3w"]
+[ext_resource type="Script" path="res://player_list.gd" id="2_bx0k2"]
+[ext_resource type="Script" path="res://seed.gd" id="4_as47k"]
+[ext_resource type="PackedScene" uid="uid://dvlm3erwbpfri" path="res://Level.tscn" id="4_uanju"]
+
+[node name="Main" type="Node"]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://Level.tscn")
+spawn_path = NodePath("..")
+
+[node name="PlayerList" type="Node" parent="."]
+script = ExtResource("2_bx0k2")
+
+[node name="MainMenu" parent="." instance=ExtResource("1_7mi3w")]
+
+[node name="Seed" type="Node" parent="."]
+script = ExtResource("4_as47k")
+
+[node name="Level" parent="." instance=ExtResource("4_uanju")]
+
+[connection signal="seed_request" from="MainMenu" to="Seed" method="_on_main_menu_seed_request"]
+[connection signal="seed_roll" from="MainMenu" to="Seed" method="_on_main_menu_seed_roll"]

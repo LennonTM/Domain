@@ -1,0 +1,212 @@
+[gd_scene load_steps=22 format=3 uid="uid://dypn8oygspn3o"]
+
+[ext_resource type="Script" path="res://Player.gd" id="1_lrx10"]
+[ext_resource type="PackedScene" uid="uid://dgw1cl0kms23e" path="res://HealthBar.tscn" id="2_8y356"]
+[ext_resource type="Script" path="res://name_tag.gd" id="2_a1s7u"]
+[ext_resource type="PackedScene" uid="uid://orjxawnfpj51" path="res://inventory.tscn" id="2_xpq5h"]
+[ext_resource type="Texture2D" uid="uid://bd4n7sv8f22ca" path="res://PNG (Transparent)/circle_03.png" id="5_7l5dr"]
+[ext_resource type="PackedScene" uid="uid://0dh35noyc5ka" path="res://hp_comp.tscn" id="6_etf1m"]
+[ext_resource type="PackedScene" uid="uid://dt1p61836msqa" path="res://damage_receiver.tscn" id="7_b5un7"]
+[ext_resource type="AudioStream" uid="uid://c3ute6ja5bys6" path="res://Smash.mp3" id="7_j2wrc"]
+[ext_resource type="PackedScene" uid="uid://dxdg41tm1mrix" path="res://hud.tscn" id="8_65qs1"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hrxhx"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("HPComp:value")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("Head:rotation")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_w6ivl"]
+
+[sub_resource type="Animation" id="Animation_0yfs0"]
+resource_name = "Poke"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Inventory:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.5, -0.7, -0.5), Vector3(0.5, -0.7, -2), Vector3(0.5, -0.7, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/Inventory:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5708, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_mygku"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Inventory:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.5, -0.7, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/Inventory:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.001),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-1.5708, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lm03i"]
+resource_name = "Sweep"
+length = 0.625
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Inventory:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.5, -0.7, -0.5), Vector3(0, -0.7, -2), Vector3(0.5, -0.7, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/Inventory:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.5708, 0, 0), Vector3(-1.5708, 0.517455, 0), Vector3(-1.5708, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tih7i"]
+_data = {
+"Poke": SubResource("Animation_0yfs0"),
+"RESET": SubResource("Animation_mygku"),
+"Sweep": SubResource("Animation_lm03i")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_kfk15"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7ml5y"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s1n1p"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("5_7l5dr")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mfe0q"]
+material = SubResource("StandardMaterial3D_s1n1p")
+orientation = 2
+
+[sub_resource type="PlaceholderMesh" id="PlaceholderMesh_gk7yw"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_omxng"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("inventory") groups=["player"]]
+script = ExtResource("1_lrx10")
+inventory = NodePath("Head/Inventory")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_hrxhx")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_w6ivl")
+
+[node name="NameTag" type="Label3D" parent="." node_paths=PackedStringArray("source")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.39766, 0)
+billboard = 1
+text = "PLAYER
+"
+autowrap_mode = 1
+script = ExtResource("2_a1s7u")
+source = NodePath("..")
+
+[node name="Bonk" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tih7i")
+}
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_kfk15")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.96118, 0.00202942, -1.54323)
+emitting = false
+amount = 1
+lifetime = 0.1
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_7ml5y")
+draw_pass_1 = SubResource("PlaneMesh_mfe0q")
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("HP") instance=ExtResource("2_8y356")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07988, 0)
+HP = NodePath("../HPComp")
+
+[node name="HPComp" parent="." instance=ExtResource("6_etf1m")]
+value = 100.0
+maxValue = 100.0
+
+[node name="DamageReceiver" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("7_b5un7")]
+HealthComp = NodePath("../HPComp")
+ParticleMesh = SubResource("PlaceholderMesh_gk7yw")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+
+[node name="RayCast3D" type="RayCast3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, -1.1365e-07, -1, 0, 2.6, -4.37114e-08, 0, 0, -0.4)
+
+[node name="Inventory" parent="Head" instance=ExtResource("2_xpq5h")]
+transform = Transform3D(1, 0, 0, 0, -3.61999e-06, 1, 0, -1, -3.61999e-06, 0.5, -0.7, -0.5)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.112868, -0.243695)
+mesh = SubResource("BoxMesh_omxng")
+skeleton = NodePath("../..")
+
+[node name="HitSound" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, -7.07805e-07, 0, 7.07805e-07, 10, -1.05108, 3.05474e-06, 5.96046e-07)
+stream = ExtResource("7_j2wrc")
+volume_db = -10.0
+
+[node name="HUD" parent="." node_paths=PackedStringArray("player") instance=ExtResource("8_65qs1")]
+player = NodePath("..")

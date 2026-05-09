@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://bjvtf774pnqv"]
+
+[ext_resource type="Script" path="res://procedural_map.gd" id="1_bialu"]
+[ext_resource type="Script" path="res://navigation_region_3d.gd" id="3_m8uyb"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_68o41"]
+noise_type = 3
+frequency = 0.03
+fractal_octaves = 3
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4sqe6"]
+noise_type = 3
+frequency = 0.003
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_s15oe"]
+geometry_source_geometry_mode = 2
+geometry_source_group_name = &"nav_group"
+cell_size = 0.5
+cell_height = 0.2
+agent_height = 1.0
+agent_max_climb = 0.4
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_favvu"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_5uwfg"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_6sobx"]
+shadow_mesh = SubResource("ArrayMesh_5uwfg")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qnpis"]
+
+[node name="Procedural_Map" type="Node3D" node_paths=PackedStringArray("mesh", "collision", "nav_reg")]
+script = ExtResource("1_bialu")
+width = 16.0
+depth = 16.0
+width_nodes = 16
+depth_nodes = 16
+amplitude = 16.0
+height_noise = SubResource("FastNoiseLite_68o41")
+temperature_noise = SubResource("FastNoiseLite_4sqe6")
+mesh = NodePath("StaticBody3D/MeshInstance3D")
+collision = NodePath("StaticBody3D/CollisionShape3D")
+nav_reg = NodePath("NavigationRegion3D")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.99986, -0.0124484, -0.0111615, 0.0167196, -0.744441, -0.667479, 0, -0.667572, 0.744545, 0, 18.1526, 0)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_s15oe")
+script = ExtResource("3_m8uyb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_favvu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" groups=["nav_group"]]
+mesh = SubResource("ArrayMesh_6sobx")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_qnpis")
+
+[connection signal="ready_to_bake" from="." to="NavigationRegion3D" method="_on_procedural_map_ready_to_bake"]
+[connection signal="bake_done" from="NavigationRegion3D" to="." method="_on_navigation_region_3d_bake_done"]

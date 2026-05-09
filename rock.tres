@@ -1,0 +1,22 @@
+[gd_resource type="StandardMaterial3D" load_steps=6 format=3 uid="uid://brh8l0g4mq4ph"]
+
+[ext_resource type="Texture2D" uid="uid://ca6a15cevj6i7" path="res://Rock032_2K-PNG_Color.png" id="1_a4557"]
+[ext_resource type="Texture2D" uid="uid://dkblj7hifrcx4" path="res://Rock032_2K-PNG_AmbientOcclusion.png" id="2_wpf1n"]
+[ext_resource type="Texture2D" uid="uid://hq1ifrutv5do" path="res://Rock032_2K-PNG_Displacement.png" id="3_pgk48"]
+[ext_resource type="Texture2D" uid="uid://cxh157hr4ccku" path="res://Rock032_2K-PNG_NormalGL.png" id="4_icjl8"]
+[ext_resource type="Texture2D" uid="uid://lxu6m61lpbdu" path="res://Rock032_2K-PNG_Roughness.png" id="5_r0wla"]
+
+[resource]
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_a4557")
+metallic_specular = 0.0
+roughness_texture = ExtResource("5_r0wla")
+normal_enabled = true
+normal_texture = ExtResource("4_icjl8")
+rim = 0.0
+ao_enabled = true
+ao_texture = ExtResource("2_wpf1n")
+heightmap_enabled = true
+heightmap_scale = 0.05
+heightmap_texture = ExtResource("3_pgk48")
+uv1_scale = Vector3(4, 4, 4)

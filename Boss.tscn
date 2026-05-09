@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bmu4h6re401e1"]
+
+[ext_resource type="Material" uid="uid://brh8l0g4mq4ph" path="res://rock.tres" id="1_857ir"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_c0j45"]
+material = ExtResource("1_857ir")
+radius = 10.0
+height = 20.0
+
+[node name="Boss" type="CharacterBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_c0j45")

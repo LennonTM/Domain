@@ -1,0 +1,228 @@
+[gd_scene load_steps=27 format=3 uid="uid://dsp7nm0sns08c"]
+
+[ext_resource type="Script" path="res://mob.gd" id="1_molco"]
+[ext_resource type="Material" uid="uid://brh8l0g4mq4ph" path="res://rock.tres" id="2_bvga7"]
+[ext_resource type="PackedScene" uid="uid://dgw1cl0kms23e" path="res://HealthBar.tscn" id="3_orus7"]
+[ext_resource type="CapsuleMesh" uid="uid://clfn31aiy3lgs" path="res://mob_Rock_particle.tres" id="3_wbt8h"]
+[ext_resource type="AudioStream" uid="uid://w6b702j3skf3" path="res://walking.mp3" id="4_5436t"]
+[ext_resource type="PackedScene" uid="uid://cuxnq1hcgw1jx" path="res://MobWindupAttack.tscn" id="5_27lhe"]
+[ext_resource type="AudioStream" uid="uid://2cgab51nt8li" path="res://Windup.mp3" id="6_s5l3o"]
+[ext_resource type="AudioStream" uid="uid://c3ute6ja5bys6" path="res://Smash.mp3" id="7_e370u"]
+[ext_resource type="PackedScene" uid="uid://l4mru15xmo81" path="res://pathfind_to_player.tscn" id="8_bd6ag"]
+[ext_resource type="PackedScene" uid="uid://ca2bwwfwu3u6w" path="res://idle_sound.tscn" id="8_i20sm"]
+[ext_resource type="PackedScene" uid="uid://0dh35noyc5ka" path="res://hp_comp.tscn" id="10_8gwgr"]
+[ext_resource type="PackedScene" uid="uid://dt1p61836msqa" path="res://damage_receiver.tscn" id="11_dru5n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n8i5h"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qjjnm"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("HPComp:value")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="Animation" id="Animation_c0ht8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pitch:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_qr2hn"]
+resource_name = "release"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pitch:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-1.309, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_x3ck5"]
+resource_name = "roll_back"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pitch:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.349066, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_7u3ei"]
+resource_name = "smash"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Pitch:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.309, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d14qc"]
+_data = {
+"RESET": SubResource("Animation_c0ht8"),
+"release": SubResource("Animation_qr2hn"),
+"roll_back": SubResource("Animation_x3ck5"),
+"smash": SubResource("Animation_7u3ei")
+}
+
+[sub_resource type="Curve" id="Curve_wbwxk"]
+_data = [Vector2(0.00662252, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_mdbjy"]
+curve = SubResource("Curve_wbwxk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j7no5"]
+lifetime_randomness = 1.0
+orbit_velocity_min = 3.0
+orbit_velocity_max = 3.0
+radial_velocity_min = 9.0
+radial_velocity_max = 9.0
+radial_velocity_curve = SubResource("CurveTexture_mdbjy")
+radial_accel_max = 26.45
+turbulence_enabled = true
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fyqgs"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ye0j"]
+size = Vector3(0.6, 1, 0.5)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uakpi"]
+material = ExtResource("2_bvga7")
+height = 1.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_gl16f"]
+material = ExtResource("2_bvga7")
+
+[node name="Mob" type="CharacterBody3D" groups=["mob"]]
+script = ExtResource("1_molco")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 2.0
+path_max_distance = 5.01
+avoidance_enabled = true
+radius = 1.0
+neighbor_distance = 10.0
+max_neighbors = 6
+time_horizon_obstacles = 1.0
+max_speed = 5.0
+use_3d_avoidance = true
+debug_enabled = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.696096, -0.00630134)
+shape = SubResource("BoxShape3D_n8i5h")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_qjjnm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_d14qc")
+}
+
+[node name="HitMarker" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 1.86265e-09, 5.96046e-08, 1, 0, -1.86265e-09, 0, 1, 0, 0.888589, 0)
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_j7no5")
+draw_pass_1 = ExtResource("3_wbt8h")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_fyqgs")
+
+[node name="MobWindupAttack" parent="." node_paths=PackedStringArray("detector", "hit", "animation") instance=ExtResource("5_27lhe")]
+detector = NodePath("../Area3D")
+hit = NodePath("../Pitch/Area3D")
+damage = 30.0
+animation = NodePath("../AnimationPlayer")
+windupAnimName = "roll_back"
+smashAnimName = "smash"
+releaseAnimName = "release"
+windupStream = ExtResource("6_s5l3o")
+smashStream = ExtResource("7_e370u")
+cooldownTime = 1.5
+
+[node name="PathfindToPlayer" parent="." node_paths=PackedStringArray("nav_agent") instance=ExtResource("8_bd6ag")]
+nav_agent = NodePath("../NavigationAgent3D")
+SPEED = 10.0
+
+[node name="IdleSound" parent="." instance=ExtResource("8_i20sm")]
+stream = ExtResource("4_5436t")
+
+[node name="HPComp" parent="." instance=ExtResource("10_8gwgr")]
+value = 100.0
+maxValue = 100.0
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("HP") instance=ExtResource("3_orus7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16178, 0)
+HP = NodePath("../HPComp")
+
+[node name="DamageReceiver" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("11_dru5n")]
+HealthComp = NodePath("../HPComp")
+ParticleMesh = ExtResource("3_wbt8h")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.215306, -0.753224)
+shape = SubResource("BoxShape3D_0ye0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_uakpi")
+metadata/_edit_lock_ = true
+
+[node name="Pitch" type="Node3D" parent="."]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Pitch"]
+transform = Transform3D(0.554914, 0, 0, 0, 0.543969, 0.00501731, 0, -0.00454777, 0.600133, 0, 0.708882, -0.00592649)
+rotation_order = 0
+mesh = SubResource("BoxMesh_gl16f")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Pitch"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pitch/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.696096, -0.00630134)
+shape = SubResource("BoxShape3D_n8i5h")
+
+[connection signal="path_changed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_path_changed"]
+[connection signal="target_reached" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_target_reached"]
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

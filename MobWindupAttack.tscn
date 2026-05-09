@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuxnq1hcgw1jx"]
+
+[ext_resource type="Script" path="res://MobWindupAttack.gd" id="1_3mdmq"]
+
+[node name="MobWindupAttack" type="Node3D"]
+script = ExtResource("1_3mdmq")
+
+[node name="Cooldown" type="Timer" parent="."]
+wait_time = 1.025
+one_shot = true
+
+[node name="WindupAudio" type="AudioStreamPlayer3D" parent="."]
+
+[node name="SmashAudio" type="AudioStreamPlayer3D" parent="."]

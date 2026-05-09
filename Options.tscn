@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://bek6j3n65mkha"]
+
+[ext_resource type="Script" path="res://Options.gd" id="1_6sxwj"]
+
+[sub_resource type="Theme" id="Theme_ioi04"]
+default_font_size = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vup0l"]
+bg_color = Color(0.164706, 0.164706, 0.164706, 0.501961)
+
+[node name="Options" type="CanvasLayer"]
+script = ExtResource("1_6sxwj")
+
+[node name="OptionsPanel" type="PanelContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = 11.0
+offset_right = 38.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.967574, 0.97772)
+theme = SubResource("Theme_ioi04")
+theme_override_styles/panel = SubResource("StyleBoxFlat_vup0l")
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OptionsPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="SensLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sensitivity
+"
+
+[node name="SensSlider" type="HSlider" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 0.1
+
+[node name="FOVLabel" type="Label" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "FOV"
+
+[node name="FOVSlider" type="HSlider" parent="OptionsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+min_value = 30.0
+max_value = 120.0
+value = 30.0

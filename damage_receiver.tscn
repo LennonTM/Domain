@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dt1p61836msqa"]
+
+[ext_resource type="Script" path="res://DamageReceiver.gd" id="1_kf4a0"]
+
+[sub_resource type="Curve" id="Curve_j5y3n"]
+_data = [Vector2(0.00662252, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8ojfb"]
+curve = SubResource("Curve_j5y3n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pfoo1"]
+lifetime_randomness = 1.0
+orbit_velocity_min = 3.0
+orbit_velocity_max = 3.0
+radial_velocity_min = 9.0
+radial_velocity_max = 9.0
+radial_velocity_curve = SubResource("CurveTexture_8ojfb")
+radial_accel_max = 26.45
+turbulence_enabled = true
+
+[node name="DamageReceiver" type="Node3D"]
+script = ExtResource("1_kf4a0")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 1.86265e-09, 5.96046e-08, 1, 0, -1.86265e-09, 0, 1, 0, 0.888589, 0)
+emitting = false
+amount = 20
+lifetime = 0.5
+one_shot = true
+trail_lifetime = 0.01
+process_material = SubResource("ParticleProcessMaterial_pfoo1")

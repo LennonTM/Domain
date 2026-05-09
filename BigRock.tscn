@@ -1,0 +1,167 @@
+[gd_scene load_steps=22 format=3 uid="uid://r3lfvkihk7ts"]
+
+[ext_resource type="Script" path="res://BigRock.gd" id="1_erbju"]
+[ext_resource type="Material" uid="uid://brh8l0g4mq4ph" path="res://rock.tres" id="1_wg7ar"]
+[ext_resource type="AnimationLibrary" uid="uid://bri20yltkxsym" path="res://bigRock.res" id="2_j0ck0"]
+[ext_resource type="PackedScene" uid="uid://cuxnq1hcgw1jx" path="res://MobWindupAttack.tscn" id="3_v0tk1"]
+[ext_resource type="AudioStream" uid="uid://2cgab51nt8li" path="res://Windup.mp3" id="4_qqvnm"]
+[ext_resource type="AudioStream" uid="uid://c3ute6ja5bys6" path="res://Smash.mp3" id="5_w1ual"]
+[ext_resource type="PackedScene" uid="uid://l4mru15xmo81" path="res://pathfind_to_player.tscn" id="6_3uqj2"]
+[ext_resource type="PackedScene" uid="uid://dt1p61836msqa" path="res://damage_receiver.tscn" id="7_fvjj1"]
+[ext_resource type="PackedScene" uid="uid://0dh35noyc5ka" path="res://hp_comp.tscn" id="8_1x0tm"]
+[ext_resource type="PackedScene" uid="uid://dgw1cl0kms23e" path="res://HealthBar.tscn" id="9_7d1i2"]
+[ext_resource type="PackedScene" uid="uid://18dd62x5r84j" path="res://boss_bar.tscn" id="10_6th7h"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_s8ttx"]
+radius = 10.0
+
+[sub_resource type="Animation" id="Animation_6uk11"]
+resource_name = "RESET"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Twist:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_8sfbm"]
+resource_name = "jump"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Twist:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 20, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_1rqpe"]
+resource_name = "smash"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Twist:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 20, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2aci3"]
+_data = {
+"RESET": SubResource("Animation_6uk11"),
+"jump": SubResource("Animation_8sfbm"),
+"smash": SubResource("Animation_1rqpe")
+}
+
+[sub_resource type="SphereMesh" id="SphereMesh_c0j45"]
+material = ExtResource("1_wg7ar")
+radius = 10.0
+height = 20.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fs11j"]
+height = 6.266
+radius = 9.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_i5mw1"]
+radius = 5.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_xt0l2"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[sub_resource type="PlaceholderMesh" id="PlaceholderMesh_28u50"]
+
+[node name="BigRock" type="CharacterBody3D"]
+script = ExtResource("1_erbju")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_s8ttx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": ExtResource("2_j0ck0"),
+"BigRock": SubResource("AnimationLibrary_2aci3")
+}
+
+[node name="MobWindupAttack" parent="." node_paths=PackedStringArray("detector", "hit", "animation") instance=ExtResource("3_v0tk1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.71984, 0.536612, 6.77341)
+detector = NodePath("../Twist/Area3D")
+hit = NodePath("../Twist/Area3D2")
+damage = 50.0
+animation = NodePath("../AnimationPlayer")
+windupAnimName = "jump"
+smashAnimName = "smash"
+releaseAnimName = "RESET"
+windupStream = ExtResource("4_qqvnm")
+smashStream = ExtResource("5_w1ual")
+cooldownTime = 5.0
+
+[node name="Twist" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Twist"]
+mesh = SubResource("SphereMesh_c0j45")
+skeleton = NodePath("../..")
+
+[node name="Area3D" type="Area3D" parent="Twist"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.8737, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Twist/Area3D"]
+transform = Transform3D(1.48364, 0, 0, 0, 1.48364, 0, 0, 0, 1.48364, 0, -19.9963, 0)
+shape = SubResource("CylinderShape3D_fs11j")
+
+[node name="Area3D2" type="Area3D" parent="Twist"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0365896, -1.5224, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Twist/Area3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -9.8623, 0)
+shape = SubResource("CylinderShape3D_i5mw1")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_xt0l2")
+
+[node name="PathfindToPlayer" parent="." node_paths=PackedStringArray("nav_agent") instance=ExtResource("6_3uqj2")]
+nav_agent = NodePath("../NavigationAgent3D")
+SPEED = 1.0
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 15.0
+target_desired_distance = 15.0
+avoidance_enabled = true
+height = 20.0
+radius = 10.0
+
+[node name="DamageReceiver" parent="." node_paths=PackedStringArray("HealthComp") instance=ExtResource("7_fvjj1")]
+HealthComp = NodePath("../HPComp")
+ParticleMesh = SubResource("PlaceholderMesh_28u50")
+
+[node name="HPComp" parent="." instance=ExtResource("8_1x0tm")]
+value = 1000.0
+maxValue = 1000.0
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("HP") instance=ExtResource("9_7d1i2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.4037, 0)
+HP = NodePath("../HPComp")
+
+[node name="BossBar" parent="." node_paths=PackedStringArray("HP") instance=ExtResource("10_6th7h")]
+text = "BIG ROCK"
+HP = NodePath("../HPComp")

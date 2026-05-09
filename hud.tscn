@@ -1,0 +1,199 @@
+[gd_scene load_steps=10 format=3 uid="uid://dxdg41tm1mrix"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_8tsiu"]
+[ext_resource type="Texture2D" uid="uid://c7yo005164tuo" path="res://Health.png" id="3_sfpt3"]
+[ext_resource type="Texture2D" uid="uid://b0rhq8llchnuo" path="res://crosshair.png" id="3_sienv"]
+[ext_resource type="Texture2D" uid="uid://gsrqy43ijdx3" path="res://sprint.png" id="4_s4gei"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sq1ra"]
+bg_color = Color(0.27451, 0.27451, 0.27451, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qy1qk"]
+bg_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1fypn"]
+bg_color = Color(0.984314, 0.94902, 0.211765, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qruae"]
+bg_color = Color(0.223529, 0.223529, 0.223529, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xi8sx"]
+bg_color = Color(0.207843, 0.247059, 0.345098, 1)
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_8tsiu")
+
+[node name="Basic" type="Control" parent="."]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Basic"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -360.0
+offset_top = 820.0
+offset_right = 390.0
+offset_bottom = 944.0
+grow_horizontal = 2
+pivot_offset = Vector2(121, 19)
+theme_override_styles/panel = SubResource("StyleBoxFlat_sq1ra")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Basic/PanelContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HealthBar3D" type="ProgressBar" parent="Basic/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_qy1qk")
+value = 25.0
+show_percentage = false
+
+[node name="SprintBar" type="ProgressBar" parent="Basic/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 62)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/fill = SubResource("StyleBoxFlat_1fypn")
+min_value = 5.0
+max_value = 50.0
+value = 25.0
+show_percentage = false
+
+[node name="Sprint" type="TextureRect" parent="Basic"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 542.0
+offset_top = 889.0
+offset_right = 582.0
+offset_bottom = 929.0
+scale = Vector2(1.2901, 1.2901)
+texture = ExtResource("4_s4gei")
+
+[node name="Health" type="TextureRect" parent="Basic"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 550.0
+offset_top = 832.0
+offset_right = 590.0
+offset_bottom = 872.0
+scale = Vector2(0.946366, 0.946366)
+texture = ExtResource("3_sfpt3")
+
+[node name="Crosshair" type="TextureRect" parent="Basic"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(20, 20)
+size_flags_horizontal = 4
+texture = ExtResource("3_sienv")
+
+[node name="Cooldown" type="ProgressBar" parent="Basic"]
+texture_filter = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.0
+offset_top = 20.0
+offset_right = 121.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.521764, 2.64989)
+pivot_offset = Vector2(121.234, -15.401)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_qruae")
+theme_override_styles/fill = SubResource("StyleBoxFlat_xi8sx")
+max_value = 0.625
+value = 0.31
+show_percentage = false
+
+[node name="InventoryPanel" type="PanelContainer" parent="Basic"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.959
+anchor_right = 0.5
+anchor_bottom = 0.959
+offset_left = -418.0
+offset_top = -80.0
+offset_right = 418.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Basic/InventoryPanel"]
+custom_minimum_size = Vector2(800, 80)
+layout_mode = 2
+
+[node name="0" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="1" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="2" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="3" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="4" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="5" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="6" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="7" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="8" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="9" type="TextureRect" parent="Basic/InventoryPanel/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://l4mru15xmo81"]
+
+[ext_resource type="Script" path="res://PathfindToPlayer.gd" id="1_2e34d"]
+
+[node name="PathfindToPlayer" type="Node3D"]
+script = ExtResource("1_2e34d")

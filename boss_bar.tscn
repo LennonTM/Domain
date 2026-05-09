@@ -1,0 +1,52 @@
+[gd_scene load_steps=6 format=3 uid="uid://18dd62x5r84j"]
+
+[ext_resource type="Script" path="res://BossBar.gd" id="1_vkqls"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0s4sb"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_4sdlx"]
+default_font_size = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pyura"]
+bg_color = Color(0.223529, 0.223529, 0.223529, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ct8a"]
+bg_color = Color(1, 0, 0.0431373, 1)
+
+[node name="BossBar" type="Node3D"]
+script = ExtResource("1_vkqls")
+text = "BOSS NAME"
+
+[node name="Boss" type="PanelContainer" parent="."]
+clip_contents = true
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.081
+anchor_right = 0.5
+anchor_bottom = 0.081
+offset_left = -600.0
+offset_top = -47.48
+offset_right = 600.0
+offset_bottom = 75.52
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0s4sb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Boss"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Boss/VBoxContainer"]
+clip_contents = true
+layout_mode = 2
+theme = SubResource("Theme_4sdlx")
+text = "BOSS NAME"
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ProgressBar" type="ProgressBar" parent="Boss/VBoxContainer"]
+custom_minimum_size = Vector2(1200, 50)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_pyura")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1ct8a")
+value = 50.0
+show_percentage = false
