@@ -1,6 +1,8 @@
 # Domain
 
-This is a 3D survival game built with the Godot Engine. It uses procedural generation and is based on games like 'Muck' and 'Minecraft'.
+This is a 3D survival game built with the Godot Engine. It uses multiple layers of Perlin noise in order to procedurally generate biomes and terrain heights. It also allows for players to join each other through peer-to-peer UDP networking.
+
+This was inspired by games like 'Muck' and 'Minecraft'.
 
 ## Engine
 
