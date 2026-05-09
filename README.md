@@ -5,7 +5,7 @@ This is a 3D survival game built with the Godot Engine. It uses procedural gener
 ## Engine
 
 This project uses:
-- Godot Engine (recommended version: 4.x)
+- Godot Engine (recommended version: 4.6.2-stable)
 
 Download: https://godotengine.org
 
